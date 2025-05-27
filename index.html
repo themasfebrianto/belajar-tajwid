@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panduan Interaktif Ilmu Tajwid</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #fdfaf6; /* Warm Neutral Background */
+        }
+        .arabic-text {
+            font-size: 1.5rem;
+            direction: rtl;
+            font-family: 'Noto Naskh Arabic', serif; /* Common Arabic font */
+            color: #333;
+        }
+        .latin-example {
+            font-style: italic;
+            color: #555;
+        }
+        .accent-color {
+            color: #0d9488; /* Muted Teal */
+        }
+        .bg-accent {
+            background-color: #0d9488; /* Muted Teal */
+        }
+        .border-accent {
+            border-color: #0d9488; /* Muted Teal */
+        }
+        .sidebar-link {
+            display: block;
+            padding: 0.75rem 1rem;
+            border-radius: 0.375rem;
+            transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+            color: #374151; /* Gray-700 */
+        }
+        .sidebar-link:hover, .sidebar-link.active {
+            background-color: #ccfbf1; /* Teal-100 */
+            color: #0f766e; /* Teal-700 */
+        }
+        .accordion-header {
+            cursor: pointer;
+            padding: 1rem;
+            background-color: #f3f4f6; /* Gray-100 */
+            border: 1px solid #e5e7eb; /* Gray-200 */
+            border-radius: 0.375rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .accordion-header:hover {
+            background-color: #e5e7eb; /* Gray-200 */
+        }
+        .accordion-content {
+            padding: 1rem;
+            border: 1px solid #e5e7eb; /* Gray-200 */
+            border-top: none;
+            border-radius: 0 0 0.375rem 0.375rem;
+            background-color: #ffffff;
+        }
+        .content-section {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        /* Custom scrollbar for webkit browsers */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #fdfaf6;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #0d9488;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #0f766e;
+        }
+    </style>
+</head>
+<body class="text-gray-800">
+
+    <div class="flex flex-col md:flex-row min-h-screen">
+        <aside id="sidebar" class="w-full md:w-64 bg-white shadow-lg p-4 space-y-2 transform md:transform-none -translate-x-full md:translate-x-0 transition-transform duration-300 ease-in-out fixed md:static h-full z-20 overflow-y-auto">
+            <h1 class="text-2xl font-bold accent-color mb-6 text-center">Ilmu Tajwid</h1>
+            <nav id="nav-links" class="space-y-1">
+                </nav>
+        </aside>
+
+        <main class="flex-1 p-6 md:p-10 bg-fdfaf6 overflow-y-auto">
+            <button id="menu-toggle" class="md:hidden fixed top-4 right-4 bg-accent text-white p-2 rounded-md z-30">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div id="content-area">
+                </div>
+        </main>
+    </div>
+
+    <script>
+        const tajwidData = {
+            pendahuluan: {
+                title: "Pendahuluan Ilmu Tajwid",
+                content: `
+                    <p class="mb-4 text-lg leading-relaxed">Secara bahasa, kata "<strong>Tajwid</strong>" berarti "<strong>Tahsin</strong>" yang artinya memperbaiki. Sedangkan menurut istilah adalah:</p>
+                    <p class="arabic-text text-center my-4 p-3 bg-teal-50 rounded-md">هُوَ إِخْرَاجُ كُلِّ حَرْفٍ مِنْ مَخْرجِهِ مَعَ إِعْطَائِهِ حَقَّهُ وَمُسْتَحَقَّهُ</p>
+                    <p class="mb-4 text-lg leading-relaxed">"Mengeluarkan setiap huruf dari makhrajnya, serta memberi hak dan mustahaqnya."</p>
+                    <p class="mb-2 text-lg leading-relaxed">Yang dimaksud <strong>hak huruf</strong> adalah sifat asli yang bersama dengan huruf tersebut, seperti Al Jahr, Isti'la, dsb.</p>
+                    <p class="text-lg leading-relaxed">Sedangkan yang dimaksud <strong>mustahaq huruf</strong> adalah sifat yang nampak sewaktu-waktu, seperti Tafkhim, Tarqiq, Ikhfa, dsb.</p>
+                    <p class="mt-6 text-lg leading-relaxed">Aplikasi interaktif ini bertujuan untuk membantu Anda memahami dasar-dasar Ilmu Tajwid dengan cara yang lebih mudah diakses. Silakan gunakan navigasi di samping untuk menjelajahi berbagai topik.</p>
+                `
+            },
+            makharijulHuruf: {
+                title: "Tempat Keluarnya Huruf (مخارج الحروف)",
+                intro: "<p class='mb-4 text-lg'>Makharijul Huruf adalah tempat-tempat keluarnya bunyi huruf hijaiyah ketika diucapkan. Memahami makhraj sangat penting untuk pelafalan yang benar. Berikut adalah pembagiannya:</p>",
+                sections: [
+                    { 
+                        title: "Rongga Mulut (أَلجَوفُ)", 
+                        content: "Huruf-huruf mad: <span class='arabic-text'>و</span> (sukun sebelumnya dhammah, pengucapan dengan memonyongkan dua bibir), <span class='arabic-text'>ي</span> (sukun sebelumnya kasrah, pengucapan dengan menurunkan bibir bagian bawah), <span class='arabic-text'>ا</span> (sukun sebelumnya fathah, pengucapan dengan membuka mulut)." 
+                    },
+                    { 
+                        title: "Tenggorokan (الحلق)", 
+                        content: `
+                            <ul class="list-disc list-inside space-y-1">
+                                <li><strong>Atas (أقصى الحلق):</strong> <span class="arabic-text">ء ه</span></li>
+                                <li><strong>Tengah (وسط الحلق):</strong> <span class="arabic-text">ع ح</span></li>
+                                <li><strong>Bawah (أدنى الحلق):</strong> <span class="arabic-text">غ خ</span></li>
+                            </ul>
+                        `
+                    },
+                    {
+                        title: "Lidah (اللسان)",
+                        content: `
+                            <ul class="list-disc list-inside space-y-2">
+                                <li><strong>Pangkal lidah (أقصى اللسان):</strong>
+                                    <ul class="list-circle list-inside ml-4">
+                                        <li>Dekat tenggorokan: <span class="arabic-text">ق</span></li>
+                                        <li>Lebih ke depan sedikit: <span class="arabic-text">ك</span></li>
+                                    </ul>
+                                </li>
+                                <li><strong>Tengah lidah (وسط اللسان) bertemu langit-langit:</strong> <span class="arabic-text">ج ش ي</span> (non-mad)</li>
+                                <li><strong>Sisi lidah (حافة اللسان):</strong>
+                                    <ul class="list-circle list-inside ml-4">
+                                        <li>Pangkal sisi lidah bertemu geraham atas: <span class="arabic-text">ض</span></li>
+                                    </ul>
+                                </li>
+                                <li><strong>Ujung lidah (طرف اللسان):</strong>
+                                    <ul class="list-circle list-inside ml-4">
+                                        <li>Ujung lidah bertemu gusi gigi seri atas bagian dalam: <span class="arabic-text">ل</span></li>
+                                        <li>Sedikit di bawah makhraj Lam: <span class="arabic-text">ن</span></li>
+                                        <li>Lebih ke dalam dari makhraj Nun: <span class="arabic-text">ر</span></li>
+                                        <li>Ujung lidah bertemu pangkal gigi seri atas: <span class="arabic-text">ط د ت</span></li>
+                                        <li>Ujung lidah bertemu ujung gigi seri atas (sedikit keluar): <span class="arabic-text">ظ ذ ث</span></li>
+                                        <li>Ujung lidah bertemu bagian bawah gigi seri atas (hampir mengenai gigi seri bawah): <span class="arabic-text">ص س ز</span></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        `
+                    },
+                    {
+                        title: "Dua Bibir (الشفتان)",
+                        content: `
+                            <ul class="list-disc list-inside space-y-1">
+                                <li>Bibir bawah bagian dalam bertemu ujung gigi seri atas: <span class="arabic-text">ف</span></li>
+                                <li>Merapatkan kedua bibir: <span class="arabic-text">ب م</span></li>
+                                <li>Memonyongkan kedua bibir (tanpa serapat Mim): <span class="arabic-text">و</span> (non-mad)</li>
+                            </ul>
+                        `
+                    },
+                    {
+                        title: "Rongga Hidung (الخيشوم)",
+                        content: "Tempat keluarnya sifat ghunnah (dengung) yang menyertai huruf <span class='arabic-text'>ن</span> dan <span class='arabic-text'>م</span> pada kondisi tertentu (misalnya tasydid, ikhfa, iqlab, idgham bighunnah)."
+                    }
+                ]
+            },
+            hukumNunMatiTanwin: {
+                title: "Hukum Nun Mati (نْ) dan Tanwin (ـًــٍـٌ)",
+                intro: "<p class='mb-4 text-lg'>Nun mati atau tanwin memiliki beberapa hukum bacaan tergantung huruf apa yang mengikutinya. Berikut penjelasannya:</p>",
+                sections: [
+                    {
+                        title: "Idzhar Halqi (إظهار حلقي)",
+                        content: "Dibaca jelas tanpa dengung. Terjadi jika nun mati atau tanwin bertemu salah satu dari 6 huruf halq (tenggorokan): <span class='arabic-text'>ء هـ ع ح غ خ</span>."
+                    },
+                    {
+                        title: "Idgham (إدغام)",
+                        content: `
+                            Meleburkan bunyi nun mati atau tanwin ke huruf berikutnya. Terbagi dua:
+                            <ul class="list-disc list-inside ml-4 mt-2 space-y-1">
+                                <li><strong>Idgham Bighunnah (dengan dengung):</strong> Jika bertemu huruf <span class='arabic-text'>ي ن م و</span> (يَنْمُوْ). Contoh: <span class='arabic-text'>مَنْ يَقُوْلُ</span>.</li>
+                                <li><strong>Idgham Bila Ghunnah (tanpa dengung):</strong> Jika bertemu huruf <span class='arabic-text'>ل ر</span>. Contoh: <span class='arabic-text'>مِنْ لَدُنْكَ</span>.</li>
+                            </ul>
+                        `
+                    },
+                    {
+                        title: "Iqlab (إقلاب)",
+                        content: "Mengubah bunyi nun mati atau tanwin menjadi mim (<span class='arabic-text'>م</span>) disertai dengung. Terjadi jika bertemu huruf <span class='arabic-text'>ب</span>. Contoh: <span class='arabic-text'>سَمِيْعٌ بَصِيْرٌ</span>."
+                    },
+                    {
+                        title: "Ikhfa Haqiqi (إخفاء حقيقي)",
+                        content: "Dibaca samar-samar antara Idzhar dan Idgham, disertai dengung. Terjadi jika bertemu salah satu dari 15 huruf berikut: <span class='arabic-text'>ت ث ج د ذ ز س ش ص ض ط ظ ف ق ك</span>."
+                    }
+                ]
+            },
+            hukumMimMati: {
+                title: "Hukum Mim Mati (مْ)",
+                intro: "<p class='mb-4 text-lg'>Mim mati (مْ) juga memiliki hukum bacaan tersendiri ketika bertemu dengan huruf-huruf hijaiyah:</p>",
+                sections: [
+                    {
+                        title: "Ikhfa Syafawi (إخفاء شفوي)",
+                        content: "Dibaca samar disertai dengung. Terjadi jika mim mati bertemu huruf <span class='arabic-text'>ب</span>. Contoh: <span class='arabic-text'>تَرْمِيْهِمْ بِحِجَارَةٍ</span>."
+                    },
+                    {
+                        title: "Idgham Mitslain/Mimi (إدغام مثلين)",
+                        content: "Meleburkan mim mati ke huruf mim berikutnya disertai dengung. Terjadi jika mim mati bertemu huruf <span class='arabic-text'>م</span>. Contoh: <span class='arabic-text'>لَكُمْ مَا</span>."
+                    },
+                    {
+                        title: "Idzhar Syafawi (إظهار شفوي)",
+                        content: "Dibaca jelas tanpa dengung. Terjadi jika mim mati bertemu huruf selain <span class='arabic-text'>م</span> dan <span class='arabic-text'>ب</span>. Contoh: <span class='arabic-text'>ءَاَنْذَرْتَهُمْ</span>."
+                    }
+                ]
+            },
+            hukumMimNunTasydid: {
+                title: "Hukum Mim (مّ) dan Nun (نّ) Bertasydid",
+                intro: "",
+                content: "<p class='text-lg'>Setiap huruf Mim (<span class='arabic-text'>مّ</span>) dan Nun (<span class='arabic-text'>نّ</span>) yang bertasydid wajib dibaca dengan ghunnah (dengung) yang dipanjangkan sekitar dua harakat. Ini disebut juga Ghunnah Musyaddadah. Contoh: <span class='arabic-text'>إِنَّ</span>, <span class='arabic-text'>ثُمَّ</span>.</p>"
+            },
+            hukumMad: {
+                title: "Hukum Mad (المد)",
+                intro: "<p class='mb-4 text-lg'>Mad secara bahasa berarti memanjangkan. Dalam istilah tajwid, mad adalah memanjangkan suara pada huruf mad atau huruf layyin ketika bertemu sebab tertentu. Huruf mad ada tiga: <span class='arabic-text'>ا</span> (alif sukun sebelumnya fathah), <span class='arabic-text'>و</span> (wau sukun sebelumnya dhammah), <span class='arabic-text'>ي</span> (ya sukun sebelumnya kasrah).</p>",
+                sections: [
+                    {
+                        title: "Mad Asli / Mad Thabi'i (مد أصلي / طبيعي)",
+                        content: `
+                            Mad yang tidak dipengaruhi oleh sebab hamzah atau sukun. Panjangnya 2 harakat.
+                            <ul class="list-disc list-inside ml-4 mt-2 space-y-1">
+                                <li><strong>Mad Thabi'i:</strong> Huruf mad tanpa sebab lain. Contoh: <span class='arabic-text'>قَالَ</span>, <span class='arabic-text'>يَقُوْلُ</span>, <span class='arabic-text'>قِيْلَ</span>.</li>
+                                <li><strong>Mad Badal:</strong> Setiap hamzah yang dipanjangkan 2 harakat. Biasanya hamzah bertemu huruf mad, dan huruf mad itu adalah pengganti hamzah sukun. Contoh: <span class='arabic-text'>آمَنَ</span> (asalnya <span class='arabic-text'>أَأْمَنَ</span>).</li>
+                                <li><strong>Mad 'Iwadh:</strong> Terjadi ketika waqaf (berhenti) pada huruf berharakat fathatain (selain ta' marbuthah), dibaca panjang 2 harakat. Contoh: <span class='arabic-text'>عَلِيْمًا</span> dibaca <span class='arabic-text'>عَلِيْمَا</span>.</li>
+                                <li><strong>Mad Tamkin:</strong> Bertemunya dua huruf Ya (<span class='arabic-text'>ي</span>), yang pertama bertasydid dan berharakat kasrah, dan yang kedua sukun. Contoh: <span class='arabic-text'>النَّبِيِّيْنَ</span>.</li>
+                                <li><strong>Mad Shilah Qashirah:</strong> Terjadi pada Ha Dhamir (<span class='arabic-text'>ـه</span> / <span class='arabic-text'>ـهِ</span>) yang terletak di antara dua huruf berharakat dan tidak bertemu hamzah qatha'. Dibaca panjang 2 harakat. Contoh: <span class='arabic-text'>إِنَّهُ هُوَ</span>.</li>
+                            </ul>
+                        `
+                    },
+                    {
+                        title: "Mad Far'i (مد فرعي)",
+                        content: `
+                            Mad yang dipengaruhi oleh sebab hamzah atau sukun.
+                            <strong class="block mt-3 mb-1">Sebab Hamzah:</strong>
+                            <ul class="list-disc list-inside ml-4 space-y-1">
+                                <li><strong>Mad Wajib Muttashil:</strong> Huruf mad bertemu hamzah dalam satu kata. Panjang 4 atau 5 harakat. Contoh: <span class='arabic-text'>جَاءَ</span>, <span class='arabic-text'>السَّمَاءُ</span>.</li>
+                                <li><strong>Mad Jaiz Munfashil:</strong> Huruf mad bertemu hamzah di lain kata. Panjang 2, 4, atau 5 harakat. Contoh: <span class='arabic-text'>يَا أَيُّهَا</span>.</li>
+                                <li><strong>Mad Shilah Thawilah:</strong> Mad Shilah Qashirah yang bertemu hamzah qatha'. Panjang 2, 4, atau 5 harakat. Contoh: <span class='arabic-text'>مَالَهُ أَخْلَدَهُ</span>.</li>
+                            </ul>
+                            <strong class="block mt-3 mb-1">Sebab Sukun:</strong>
+                            <ul class="list-disc list-inside ml-4 space-y-1">
+                                <li><strong>Mad 'Aridh Lissukun:</strong> Huruf mad bertemu huruf sukun karena waqaf. Panjang 2, 4, atau 6 harakat. Contoh: <span class='arabic-text'>الْعَالَمِيْنَ</span> (waqaf).</li>
+                                <li><strong>Mad Lin:</strong> Huruf Wau (<span class='arabic-text'>و</span>) atau Ya (<span class='arabic-text'>ي</span>) sukun didahului fathah, bertemu huruf sukun karena waqaf. Panjang 2, 4, atau 6 harakat. Contoh: <span class='arabic-text'>خَوْفٌ</span> (waqaf), <span class='arabic-text'>الْبَيْتِ</span> (waqaf).</li>
+                                <li><strong>Mad Lazim:</strong> Huruf mad bertemu sukun asli (bukan karena waqaf). Panjang 6 harakat. Terbagi menjadi:
+                                    <ul class="list-circle list-inside ml-6 mt-1 space-y-1">
+                                        <li><strong>Mad Lazim Kalimi Mukhaffaf:</strong> Bertemu sukun asli dalam satu kata, tidak bertasydid. Contoh: <span class='arabic-text'>آلْآنَ</span> (di dua tempat dalam Al-Qur'an).</li>
+                                        <li><strong>Mad Lazim Kalimi Mutsaqqal:</strong> Bertemu sukun asli dalam satu kata, berupa huruf bertasydid. Contoh: <span class='arabic-text'>الضَّالِّيْنَ</span>.</li>
+                                        <li><strong>Mad Lazim Harfi Mukhaffaf:</strong> Pada huruf muqatha'ah (awal surat) yang dibaca panjang 6 harakat dan tidak diidghamkan. Hurufnya terkumpul dalam <span class='arabic-text'>نَقَصَ عَسَلُكُمْ</span> (Nun, Qaf, Shad, 'Ain, Sin, Lam, Kaf, Mim). Contoh: <span class='arabic-text'>نٓ</span> (dibaca Nuun).</li>
+                                        <li><strong>Mad Lazim Harfi Mutsaqqal:</strong> Pada huruf muqatha'ah yang dibaca panjang 6 harakat dan diidghamkan. Contoh: <span class='arabic-text'>الٓمّٓ</span> (Lam bertemu Mim).</li>
+                                    </ul>
+                                </li>
+                                <li><strong>Mad Farq:</strong> Mad Badal bertemu tasydid. Panjang 6 harakat. Terdapat pada <span class='arabic-text'>ءَآلذَّكَرَيْنِ</span>, <span class='arabic-text'>ءَآللهُ</span>, <span class='arabic-text'>ءَآلْـَٰٔنَ</span> (variasi bacaan).</li>
+                            </ul>
+                        `
+                    }
+                ]
+            },
+            hukumAlifLam: {
+                title: "Hukum Alif Lam (ال التعريف)",
+                intro: "<p class='mb-4 text-lg'>Alif Lam Ta'rif (ال) memiliki dua hukum bacaan:</p>",
+                sections: [
+                    {
+                        title: "Alif Lam Qamariyah (القمرية)",
+                        content: "Dibaca jelas (idzhar). Terjadi jika Alif Lam bertemu salah satu dari 14 huruf Qamariyah: <span class='arabic-text'>ء ب غ ح ج ك و خ ف ع ق ي م ه</span>. (Terkumpul dalam: ابْغِ حَجَّكَ وَخَفْ عَقِيْمَه). Contoh: <span class='arabic-text'>الْقَمَرُ</span>."
+                    },
+                    {
+                        title: "Alif Lam Syamsiyah (الشمسية)",
+                        content: "Tidak dibaca (idgham), lam lebur ke huruf berikutnya dan huruf berikutnya dibaca tasydid. Terjadi jika Alif Lam bertemu salah satu dari 14 huruf Syamsiyah: <span class='arabic-text'>ط ث ص ر ت ض ذ ن د س ظ ز ش ل</span>. Contoh: <span class='arabic-text'>الشَّمْسُ</span>."
+                    }
+                ]
+            },
+            sifatHuruf: {
+                title: "Sifat-sifat Huruf (صفات الحروف)",
+                intro: "<p class='mb-4 text-lg'>Setiap huruf hijaiyah memiliki sifat-sifat yang membedakannya dari huruf lain. Sifat ini ada yang memiliki lawan dan ada yang tidak.</p>",
+                sections: [
+                    {
+                        title: "Sifat yang Memiliki Lawan Kata",
+                        content: `
+                            <div class="space-y-3">
+                                <div><strong>1. Al-Hams (الهَمْسُ) vs Al-Jahr (الجَهْرُ)</strong>
+                                    <p class="ml-4"><strong>Hams:</strong> Samar, disertai keluarnya nafas. Huruf: <span class='arabic-text'>ف ح ث ه ش خ ص س ك ت</span> (فَحَثَّهُ شَخْصٌ سَكَتَ).</p>
+                                    <p class="ml-4"><strong>Jahr:</strong> Jelas, nafas tertahan. Huruf: Selain huruf Hams.</p>
+                                </div>
+                                <div><strong>2. Asy-Syiddah (الشِّدَّة) vs At-Tawassuth (التَّوَسُّط) vs Ar-Rakhawah (الرَّخَاوَة)</strong>
+                                    <p class="ml-4"><strong>Syiddah:</strong> Kuat, suara tertahan. Huruf: <span class='arabic-text'>ء ج د ق ط ب ك ت</span> (أَجِدْ قَطٍ بَكَتْ).</p>
+                                    <p class="ml-4"><strong>Tawassuth (atau Bainiyah):</strong> Pertengahan antara Syiddah dan Rakhawah. Huruf: <span class='arabic-text'>ل ن ع م ر</span> (لِنْ عُمَرْ).</p>
+                                    <p class="ml-4"><strong>Rakhawah:</strong> Lunak, suara terlepas/mengalir. Huruf: Selain huruf Syiddah dan Tawassuth.</p>
+                                </div>
+                                <div><strong>3. Al-Isti'la (الاسْتِعْلاء) vs Al-Istifal (الاسْتِفَال)</strong>
+                                    <p class="ml-4"><strong>Isti'la:</strong> Terangkat, pangkal lidah naik ke langit-langit. Huruf: <span class='arabic-text'>خ ص ض غ ط ق ظ</span> (خُصَّ ضَغْطٍ قِظْ). Huruf-huruf ini cenderung dibaca tebal (tafkhim).</p>
+                                    <p class="ml-4"><strong>Istifal:</strong> Turun, pangkal lidah tidak terangkat. Huruf: Selain huruf Isti'la. Huruf-huruf ini cenderung dibaca tipis (tarqiq).</p>
+                                </div>
+                                <div><strong>4. Al-Ithbaq (الإِطْبَاق) vs Al-Infitah (الانْفِتَاح)</strong>
+                                    <p class="ml-4"><strong>Ithbaq:</strong> Tertutup/melekat, sebagian besar lidah menempel ke langit-langit. Huruf: <span class='arabic-text'>ص ض ط ظ</span>. Ini adalah huruf Isti'la yang paling tebal.</p>
+                                    <p class="ml-4"><strong>Infitah:</strong> Terbuka, lidah menjauh dari langit-langit. Huruf: Selain huruf Ithbaq.</p>
+                                </div>
+                                <div><strong>5. Al-Idzlaq (الإِذْلاَق) vs Al-Ishmat (الإِصْمَات)</strong>
+                                    <p class="ml-4"><strong>Idzlaq:</strong> Lancar/mudah diucapkan karena keluar dari ujung lidah atau bibir. Huruf: <span class='arabic-text'>ف ر م ن ل ب</span> (فِرَّ مِنْ لُبٍّ).</p>
+                                    <p class="ml-4"><strong>Ishmat:</strong> Tertahan/agak sulit diucapkan. Huruf: Selain huruf Idzlaq. Kata bahasa Arab asli yang terdiri dari 4 atau 5 huruf biasanya mengandung setidaknya satu huruf Idzlaq.</p>
+                                </div>
+                            </div>
+                        `
+                    },
+                    {
+                        title: "Sifat yang Tidak Memiliki Lawan Kata",
+                        content: `
+                            <ul class="list-disc list-inside space-y-2">
+                                <li><strong>Ash-Shafir (الصَّفِيْر):</strong> Suara tambahan seperti desisan. Huruf: <span class='arabic-text'>ص ز س</span>.</li>
+                                <li><strong>Al-Qalqalah (القَلْقَلَة):</strong> Pantulan suara pada huruf sukun. Huruf: <span class='arabic-text'>ق ط ب ج د</span> (قُطْبُ جَدٍّ). Ada Qalqalah Sughra (kecil, di tengah kata/akhir kata tidak waqaf) dan Kubra (besar, di akhir kata saat waqaf).</li>
+                                <li><strong>Al-Lin (اللِّيْن):</strong> Lembut, mudah diucapkan. Huruf: <span class='arabic-text'>و</span> dan <span class='arabic-text'>ي</span> sukun didahului fathah. Contoh: <span class='arabic-text'>خَوْف</span>, <span class='arabic-text'>بَيْت</span>.</li>
+                                <li><strong>Al-Inhiraf (الانْحِرَاف):</strong> Condong/miring makhrajnya. Huruf: <span class='arabic-text'>ل ر</span>.</li>
+                                <li><strong>At-Takrir (التَّكْرِيْر):</strong> Getaran pada ujung lidah. Hanya pada huruf <span class='arabic-text'>ر</span>. Getaran ini dijaga agar tidak berlebihan.</li>
+                                <li><strong>At-Tafasysyi (التَّفَشِّي):</strong> Menyebarnya angin di dalam mulut. Hanya pada huruf <span class='arabic-text'>ش</span>.</li>
+                                <li><strong>Al-Istithalah (الاسْتِطَالَة):</strong> Memanjangnya makhraj dari awal sisi lidah hingga akhir. Hanya pada huruf <span class='arabic-text'>ض</span>.</li>
+                            </ul>
+                        `
+                    }
+                ]
+            }
+        };
+
+        const navLinksContainer = document.getElementById('nav-links');
+        const contentArea = document.getElementById('content-area');
+        const sidebar = document.getElementById('sidebar');
+        const menuToggle = document.getElementById('menu-toggle');
+
+        // Populate navigation links
+        Object.keys(tajwidData).forEach(key => {
+            const link = document.createElement('a');
+            link.href = '#';
+            link.textContent = tajwidData[key].title.replace(/\s\(.*\)/, ''); // Remove Arabic in title for nav
+            link.classList.add('sidebar-link');
+            link.dataset.page = key;
+            navLinksContainer.appendChild(link);
+        });
+
+        function renderContent(pageKey) {
+            const pageData = tajwidData[pageKey];
+            if (!pageData) {
+                contentArea.innerHTML = `<h2 class="text-2xl font-semibold mb-4">Konten tidak ditemukan</h2>`;
+                return;
+            }
+
+            let html = `<div class="content-section">`;
+            html += `<h2 class="text-3xl font-bold mb-3 accent-color">${pageData.title}</h2>`;
+            
+            if (pageData.intro) {
+                html += `<div class="mb-6 p-4 bg-teal-50 rounded-md text-gray-700">${pageData.intro}</div>`;
+            }
+
+            if (pageData.content) { // For pages like pendahuluan or hukumMimNunTasydid
+                 html += `<div class="p-4 bg-white shadow rounded-md">${pageData.content}</div>`;
+            }
+
+            if (pageData.sections) {
+                pageData.sections.forEach((section, index) => {
+                    html += `
+                        <div class="mb-2 tajwid-accordion">
+                            <div class="accordion-header bg-teal-50 hover:bg-teal-100 rounded-t-md">
+                                <h3 class="text-xl font-semibold text-teal-700">${section.title}</h3>
+                                <i class="fas fa-chevron-down transition-transform duration-300"></i>
+                            </div>
+                            <div class="accordion-content hidden bg-white rounded-b-md shadow-sm">
+                                ${section.content}
+                            </div>
+                        </div>
+                    `;
+                });
+            }
+            html += `</div>`;
+            contentArea.innerHTML = html;
+            attachAccordionListeners();
+        }
+
+        function attachAccordionListeners() {
+            const accordions = document.querySelectorAll('.tajwid-accordion');
+            accordions.forEach(accordion => {
+                const header = accordion.querySelector('.accordion-header');
+                const content = accordion.querySelector('.accordion-content');
+                const icon = header.querySelector('i');
+
+                header.addEventListener('click', () => {
+                    const isHidden = content.classList.contains('hidden');
+                    // Close other accordions if you want only one open at a time (optional)
+                    // document.querySelectorAll('.tajwid-accordion .accordion-content').forEach(ac => ac.classList.add('hidden'));
+                    // document.querySelectorAll('.tajwid-accordion .accordion-header i').forEach(ic => ic.classList.remove('fa-chevron-up'), ic.classList.add('fa-chevron-down'));
+                    
+                    content.classList.toggle('hidden');
+                    icon.classList.toggle('fa-chevron-down');
+                    icon.classList.toggle('fa-chevron-up');
+                });
+            });
+        }
+        
+        navLinksContainer.addEventListener('click', (e) => {
+            if (e.target.tagName === 'A') {
+                e.preventDefault();
+                const pageKey = e.target.dataset.page;
+                renderContent(pageKey);
+
+                // Update active link
+                document.querySelectorAll('#nav-links a').forEach(link => link.classList.remove('active'));
+                e.target.classList.add('active');
+                
+                // Close sidebar on mobile after click
+                if (window.innerWidth < 768) {
+                    sidebar.classList.add('-translate-x-full');
+                }
+            }
+        });
+
+        menuToggle.addEventListener('click', () => {
+            sidebar.classList.toggle('-translate-x-full');
+        });
+
+        // Initial content load (Pendahuluan)
+        renderContent('pendahuluan');
+        document.querySelector('#nav-links a[data-page="pendahuluan"]').classList.add('active');
+
+    </script>
+</body>
+</html>
